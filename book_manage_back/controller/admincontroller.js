@@ -53,9 +53,9 @@ exports.admin_login = async (req, res) => {
     }
 }
 
+//修改密码(用户密码,用户名)
 exports.change_password = async (req, res) => {
     try {
-        console.log(req.body)
         await User.update(
             { _id: req.body.user_name },
             { password: req.body.new_password }
@@ -70,8 +70,8 @@ exports.change_password = async (req, res) => {
     }
 }
 
-//测试部分
-exports.admin_search = async (req, res) => {
+//获取所有用户
+exports.getAlladmin = async (req, res) => {
     user = await User.find();
     res.status(200).json({
         status: true,
@@ -79,6 +79,7 @@ exports.admin_search = async (req, res) => {
     })
 }
 
+//删除用户
 exports.admin_delete = async (req, res) => {
     await User.deleteMany({ _id: req.body._id }, (err, data) => {
         if (err) {

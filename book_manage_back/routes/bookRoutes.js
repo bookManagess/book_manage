@@ -10,4 +10,11 @@ router.route("/showbook")
 router.route("/findbook")
   .post(bookcontroller.rough_find)
 
+router.route("/insertbook")
+  .post(bookcontroller.insertBook)
+router.route("/controllBook")
+  .post(bookcontroller.controllBook)
+router.route("/deleteBook")
+  .post(bookcontroller.book_delete)
+
 module.exports = router

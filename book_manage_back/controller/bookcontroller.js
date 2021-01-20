@@ -65,3 +65,53 @@ exports.rough_find = async (req, res) => {
         })
     }
 }
+
+// 增加图书(传入name,author,number,pingying,status(up,down),图片url)具体看book表
+exports.insertBook = async (req, res) => {
+    try {
+        const newBook = await Book.create(req.body);
+        res.status(201).json({
+            status: "success",
+            data: newBook,
+        });
+    } catch (err) {
+        // console.log(err)
+        res.status(404).json({
+            status: true,
+            err,
+        })
+    }
+}
+
+// 上下架图书,传入图书_id,status(上架：up，下架：down)
+exports.controllBook = async (req, res) => {
+    try {
+        await Book.update(
+            { _id: req.body._id },
+            { status: req.body.status }
+        )
+        res.status(200).json({
+            message: 'success'
+        })
+    } catch (err) {
+        res.status(409).json({
+            err
+        })
+    }
+}
+
+// 删除图书,(图书_id)
+exports.book_delete = async (req, res) => {
+    await Book.deleteMany({ _id: req.body._id }, (err, data) => {
+        if (err) {
+            res.status(409).json({
+                status: true,
+                message: err
+            })
+        }
+        res.status(200).json({
+            status: true,
+            message: "删除成功"
+        })
+    })
+}

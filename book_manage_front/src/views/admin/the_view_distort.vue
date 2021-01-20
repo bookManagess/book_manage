@@ -12,7 +12,7 @@
 </style>
 
 <script>
-import Nav from "../components/nav";
+import Nav from "../../components/nav";
 
 export default {
   name: "Home",

@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-// 不能懒加载？？？
-import login from '../views/register.vue'
-import Home from '../views/the_view_distort.vue'
-import personnal from '../views/personnal.vue'
-import book_store from '../views/book_store.vue'
-import home from '../views/home.vue'
+//用户界面
+import login from '../views/login/register.vue'
+import Home from '../views/admin/the_view_distort.vue'
+import personnal from '../views/admin/personnal.vue'
+import book_store from '../views/admin/book_store.vue'
+import home from '../views/admin/home.vue'
+//管理员界面
 
 // 测试swiper
 import swiper from '../components/swiper/swiper.vue'

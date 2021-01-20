@@ -1,6 +1,18 @@
 const Bookrecord = require('../models/book_recordmodel')
 const Book = require('../models/bookmodel')
 
+//获取所有记录
+exports.getAllrecord = async (req, res) => {
+    try {
+        bookrecord = await Bookrecord.find()
+        res.status(200).json({
+            status: true,
+            bookrecord
+        })
+    } catch (err) {
+        res.status(404).json({ message: err });
+    }
+}
 //添加记录
 exports.create_record = async (req, res) => {
     try {
@@ -23,7 +35,7 @@ exports.create_record = async (req, res) => {
     }
 }
 
-//传入id,添加还书日期,书籍数量+1
+//还书,传入id,添加还书日期,书籍数量+1
 exports.return_record = async (req, res) => {
     try {
         console.log(req.body)
@@ -69,3 +81,4 @@ exports.get_record = async (req, res) => {
         res.status(404).json({ message: err });
     }
 }
+

@@ -3,7 +3,7 @@
     <div class="container">
       <div class="user signinBx">
         <div class="imgBx">
-          <img src="../assets/image/login_register/library.jpg" />
+          <img src="../../assets/image/login_register/library.jpg" />
         </div>
         <div class="formBx">
           <form>
@@ -52,7 +52,7 @@
           </form>
         </div>
         <div class="imgBx">
-          <img src="../assets/image/login_register/library.jpg" />
+          <img src="../../assets/image/login_register/library.jpg" />
         </div>
       </div>
     </div>
@@ -60,11 +60,11 @@
 </template>
 
 <style scoped>
-@import "../assets/css/register-style.css";
+@import "../../assets/css/register-style.css";
 </style>
 
 <script>
-import { request } from "../api/index";
+import { request } from "../../api/index";
 
 export default {
   name: "login",

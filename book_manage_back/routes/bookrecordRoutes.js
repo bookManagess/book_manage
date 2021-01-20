@@ -2,6 +2,10 @@ const express = require('express')
 var router = express.Router()
 const bookrecordcontroller = require('../controller/bookrecordcontroller')
 
+router 
+  .route("/getbookrecord")
+  .get(bookrecordcontroller.getAllrecord)
+
 router
   .route("/showbookrecord")
   .get(bookrecordcontroller.get_record)

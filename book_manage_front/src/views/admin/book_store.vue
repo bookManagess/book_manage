@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import booknav from "../components/book_store/book_nav";
-import booklist from "../components/book_store/book_list";
+import booknav from "../../components/book_store/book_nav";
+import booklist from "../../components/book_store/book_list";
 
 export default {
   name: "books",

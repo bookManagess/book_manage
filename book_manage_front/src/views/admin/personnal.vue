@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import personnav from "../components/person_message/person_nav";
-import personlist from "../components/person_message/person_list";
+import personnav from "../../components/person_message/person_nav";
+import personlist from "../../components/person_message/person_list";
 
 export default {
   name: "personal",
