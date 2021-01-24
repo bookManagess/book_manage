@@ -44,7 +44,8 @@ exports.admin_login = async (req, res) => {
             } else {
                 res.status(200).json({
                     status: true,
-                    message: "successs"
+                    message: "successs",
+                    tip :admin.identify
                 })
             }
         }

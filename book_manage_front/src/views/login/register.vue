@@ -99,7 +99,11 @@ export default {
         .then((res) => {
           if (res.data.status) {
             // 为什么还能返回
-            this.$router.replace("/Home");
+            if(res.data.tip === "1") {
+              this.$router.replace("/manager_home");
+            } else {
+              this.$router.replace("/Home");
+            }
           } else {
             this.tip_login = res.data.message;
           }

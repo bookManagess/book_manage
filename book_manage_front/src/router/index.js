@@ -7,6 +7,11 @@ import Home from '../views/admin/the_view_distort.vue'
 import personnal from '../views/admin/personnal.vue'
 import book_store from '../views/admin/book_store.vue'
 import home from '../views/admin/home.vue'
+import manager_home from '../views/manager/manager_home.vue'
+import adminManage from '../views/manager/adminManage.vue'
+import bookRecord from '../views/manager/bookRecord.vue'
+import bookStore from '../views/manager/bookStore.vue'
+
 //管理员界面
 
 // 测试swiper
@@ -56,7 +61,27 @@ const routes = [
         component: book_store,
       },
     ]
+  },
+  {
+    path: '/manager_home',
+    component: manager_home,
+    children: [
+      {
+        path: '',
+        component: adminManage,
+      },
+      {
+        path: 'bookRecord',
+        // name: 'personal',
+        component: bookRecord,
+      },
+      {
+        path: 'bookStore',
+        component: bookStore,
+      },
+    ]
   }
+
 ]
 
 const router = new VueRouter({
