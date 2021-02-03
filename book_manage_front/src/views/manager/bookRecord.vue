@@ -12,6 +12,6 @@ export default {
   name:"bookRecord",
   components: {
     record
-  },
+  }, 
 };
 </script>
