@@ -1,5 +1,5 @@
 <template>
-    <div id="home">
+    <div id="manager_home">
       <main class="main">
         <manager_nav></manager_nav>
       </main>

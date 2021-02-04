@@ -1,5 +1,16 @@
 <template>
-    <div>
-        借书请求管理
-    </div>
+  <div>
+    <record></record>
+  </div>
 </template>
+
+<script>
+import record from "../../components/borrow_record/record.vue";
+
+export default {
+  name:"bookRecord",
+  components: {
+    record
+  },
+};
+</script>
