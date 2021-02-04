@@ -12,7 +12,7 @@ import manager_home from '../views/manager/manager_home.vue'
 import adminManage from '../views/manager/adminManage.vue'
 import bookRecord from '../views/manager/bookRecord.vue'
 import bookStore from '../views/manager/bookStore.vue'
-import bookManage from '../views/manager/bookManage'
+import bookManage from '../views/manager/bookmanage.vue'
 //管理员界面
 
 // 测试swiper
