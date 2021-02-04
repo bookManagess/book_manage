@@ -1,3 +1,4 @@
+
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
@@ -11,7 +12,7 @@ import manager_home from '../views/manager/manager_home.vue'
 import adminManage from '../views/manager/adminManage.vue'
 import bookRecord from '../views/manager/bookRecord.vue'
 import bookStore from '../views/manager/bookStore.vue'
-
+import bookManage from '../views/manager/bookManage'
 //管理员界面
 
 // 测试swiper
@@ -78,6 +79,10 @@ const routes = [
       {
         path: 'bookStore',
         component: bookStore,
+      },
+      {
+        path: 'bookManage',
+        component: bookManage,
       },
     ]
   }

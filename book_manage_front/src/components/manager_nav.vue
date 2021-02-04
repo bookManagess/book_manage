@@ -26,7 +26,7 @@ export default {
       this.$router.push("/manager_home/bookRecord");
     },
     go_store() {
-      this.$router.push("/manager_home/bookStore");
+      this.$router.push("/manager_home/bookManage");
     },
     go_login() {
       this.$router.replace("/");

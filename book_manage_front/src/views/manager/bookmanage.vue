@@ -17,9 +17,9 @@
 </template>
 
 <script>
-import bookNav from "../components/book/bookNav"
-import bookSearch from "../components/book/bookSearch"
-import bookContent from "../components/book/bookContent"
+import bookNav from "../../components/book/bookNav"
+import bookSearch from "../../components/book/bookSearch"
+import bookContent from "../../components/book/bookContent"
 export default {
   name:'book',
   components:{bookNav,bookContent,bookSearch}
