@@ -45,7 +45,8 @@ exports.admin_login = async (req, res) => {
                 res.status(200).json({
                     status: true,
                     message: "successs",
-                    tip :admin.identify
+                    tip :admin.identify,
+                    phone:admin.phone
                 })
             }
         }

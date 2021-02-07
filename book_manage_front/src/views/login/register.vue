@@ -85,8 +85,6 @@ export default {
       container.classList.toggle("active");
     },
     login() {
-      //存储登录信息
-      this.$store.commit("store_login_message", [this.login_name, this.login_password]);
       //发送请求
       request({
         url: "/admin/login",
@@ -104,6 +102,8 @@ export default {
             } else {
               this.$router.replace("/Home");
             }
+            //存储登录信息
+            this.$store.commit("store_login_message", [this.login_name, this.login_password, res.data.phone]);
           } else {
             this.tip_login = res.data.message;
           }

@@ -1,39 +1,40 @@
 <template>
-<div>
-
-<a-button class="editable-add-btn" @click="handleAdd" >
+  <div>
+    
+    <a-button class="editable-add-btn" @click="handleAdd" >
       添加用户
     </a-button>
-    
-     <a-auto-complete
-        class="search_text"
-        style="width: 200px"
-        placeholder="请输入想要查看的内容"
-        auto-focus
-      />
+    <!--
+    <a-auto-complete
+      class="search_text"
+      style="width: 200px"
+      placeholder="请输入想要查看的内容"
+      auto-focus
+    />-->
+    <a-input-search class="search_text" placeholder="请输入想要查看的内容" style="width: 200px"/>
   
-  <a-table :columns="columns" :data-source="data"  :pagination="ipagination" bordered >
-    <span slot="tags" slot-scope="tags">
-      <a-tag
-        v-for="tag in tags"
-        :key="tag"
-        :color="tag === '×' ? 'volcano' :  'geekblue' "
-      >
-        {{ tag.toUpperCase() }}
-      </a-tag>
-    </span>
-    <span slot="action" >> 
-      <a @click="handleDelete">删除</a>
-      <a-divider type="vertical" />
+    <a-table :columns="columns" :data-source="data"  :pagination="ipagination" @change="pageChange" bordered >
+      <span slot="tags" slot-scope="tags">
+        <a-tag
+          v-for="tag in tags"
+          :key="tag"
+          :color="tag === '×' ? 'volcano' :  'geekblue' "
+        >
+          {{ tag.toUpperCase() }}
+        </a-tag>
+      </span>
+      <span slot="action" >> 
+        <a @click="handleDelete">删除</a>
+        <a-divider type="vertical" />
      
-       <a @click="handleAlter">编辑</a>
-       <a-divider type="vertical" />
+        <a @click="handleAlter">编辑</a>
+        <a-divider type="vertical" />
       
-      <a @click="tagsAlter">修改用户状态</a>
-     </span>
-    
-  </a-table>
-</div>
+        <a @click="tagsAlter">修改用户状态</a>
+      </span>  
+    </a-table>
+
+  </div>
 </template>
 <script>
 const columns = [
@@ -99,18 +100,23 @@ export default {
       data,
       columns,
       ipagination: {
-          current: 1,
-          pageSize: 5,
-          total: data.length,
-          showSizeChanger: true,
-          showQuickJumper: true,
-          pageSizeOptions: ['5','10','15'],  //这里注意只能是字符串，不能是数字
-          showTotal: (total, range) => `显示${range[0]}-${range[1]}条，共有 ${total}条`
+        current: 1,
+        pageSize: 5,
+        total: data.length,
+        showSizeChanger: true,
+        showQuickJumper: true,
+        hideOnSinglePage:true, // 少于一页时隐藏分页
+        pageSizeOptions: ['5','10','15'],  //这里注意只能是字符串，不能是数字
+        showTotal: (total, range) => `显示${range[0]}-${range[1]}条，共有 ${total}条`
         }
     };
   },
   methods:{
-      handleAdd() {
+    pageChange(page, pageSize) {
+      this.ipagination.current = page.current;
+      this.ipagination.pageSize = page.pageSize;
+    },
+    handleAdd() {
       console.log('添加用户')
     },
     handleDelete(){
@@ -128,6 +134,11 @@ export default {
 
 <style scoped>
 .editable-add-btn {
-  margin-bottom: 8px;
+  margin-bottom:20px;
+  margin-top:0px;
+}
+.search_text {
+  margin-top:0px; 
+  margin-left:35%;
 }
 </style>

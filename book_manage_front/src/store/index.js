@@ -8,6 +8,7 @@ export default new Vuex.Store({
     //登录信息
     login_name: "",
     login_password: "",
+    login_phone: "",
     // 图书显示信息
     bookshow: "all",//all,science,sword
     // 借书记录显示信息
@@ -18,6 +19,7 @@ export default new Vuex.Store({
     store_login_message(state,login) {
       state.login_name = login[0]
       state.login_password = login[1]
+      state.login_phone = login[2]
     },
     // 图书显示状态
     change_bookshow(state,bookshow) {

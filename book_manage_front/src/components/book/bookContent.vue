@@ -1,5 +1,5 @@
 <template>
-  <a-table :columns="columns" :data-source="data" bordered :rowKey="record=>record.id">
+    <a-table :columns="columns" :data-source="data" :pagination="ipagination" @change="pageChange" bordered :rowKey="record=>record.id">
     <template
       v-for="col in [ 'name', 'author','type','number']"
       :slot="col"
@@ -98,6 +98,7 @@ const data = [];
 //     booknumber:'8',
 //   });
 // }
+
 import { mapState } from "vuex";
 import { request } from "../../api/index";
 export default {
@@ -113,6 +114,17 @@ export default {
       data:[],
       columns,
       editingKey: '',
+      ipagination:{
+        current: 1,
+        pageSize: 5,
+        total: data.length,
+        showSizeChanger: true,
+        showQuickJumper: true,
+        hideOnSinglePage:true, // 少于一页时隐藏分页
+        pageSizeOptions: ['5','10','15'],  //这里注意只能是字符串，不能是数字
+        showTotal: (total, range) => `显示${range[0]}-${range[1]}条，共有 ${total}条`
+      }
+        
     };
   },
   mounted() {
@@ -132,6 +144,10 @@ export default {
       });
   },
   methods: {
+    pageChange(page, pageSize) {
+      this.ipagination.current = page.current;
+      this.ipagination.pageSize = page.pageSize;
+    },
     handleChange(value, key, column) {
       const newData = [...this.data];
       const target = newData.filter(item => key === item.key)[0];
