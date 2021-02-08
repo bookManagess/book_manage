@@ -8,8 +8,6 @@
        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     </span>
     <div  id="Search">
-      <span>图书搜索</span>
-       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <a-input-search placeholder="请输入书籍信息" style="width: 200px"  v-model="value"/>
     </div>
   </div>
