@@ -1,5 +1,5 @@
 <template>
-    <a-table :columns="columns" :data-source="data" :pagination="ipagination" @change="pageChange" bordered :rowKey="record=>record.id">
+  <a-table :columns="columns" :data-source="data" bordered :rowKey="record=>record.id">
     <template
       v-for="col in [ 'name', 'author','type','number']"
       :slot="col"
@@ -98,7 +98,6 @@ const data = [];
 //     booknumber:'8',
 //   });
 // }
-
 import { mapState } from "vuex";
 import { request } from "../../api/index";
 export default {
@@ -108,23 +107,47 @@ export default {
       bookshow: (state) => state.bookshow,
     }),
   },
+  watch: {
+     bookshow(val) {
+      console.log(this.bookshow);
+      // this作用域问题
+      request({
+        url: "/book/showbook",
+        method: "get",
+        params: {
+          type: this.bookshow,
+        },
+      })
+        .then((res) => {
+          this.data = res.data.book;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    // 此处为搜索框函数
+    value(val) {
+      request({
+        url: "/book/findbook",
+        method: "post",
+        data: {
+          rough_word: val,
+        },
+      })
+        .then((res) => {
+          this.data = res.data.result;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
   data() {
     this.cacheData = data.map(item => ({ ...item }));
     return {
       data:[],
       columns,
       editingKey: '',
-      ipagination:{
-        current: 1,
-        pageSize: 5,
-        total: data.length,
-        showSizeChanger: true,
-        showQuickJumper: true,
-        hideOnSinglePage:true, // 少于一页时隐藏分页
-        pageSizeOptions: ['5','10','15'],  //这里注意只能是字符串，不能是数字
-        showTotal: (total, range) => `显示${range[0]}-${range[1]}条，共有 ${total}条`
-      }
-        
     };
   },
   mounted() {
@@ -144,10 +167,6 @@ export default {
       });
   },
   methods: {
-    pageChange(page, pageSize) {
-      this.ipagination.current = page.current;
-      this.ipagination.pageSize = page.pageSize;
-    },
     handleChange(value, key, column) {
       const newData = [...this.data];
       const target = newData.filter(item => key === item.key)[0];
