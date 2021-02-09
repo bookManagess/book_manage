@@ -2,7 +2,7 @@
   <a-row class="container">
     <a-col :span="5">
       <bookrecordNav></bookrecordNav>
-    </a-col>
+    </a-col> 
     <a-col :span="18" style="background: #ffffff">
       <record></record>
     </a-col>

@@ -15,7 +15,7 @@
         <span>已同意的借书记录</span>
       </a-menu-item>
       <a-menu-item key="3" @click="dismissed">
-        <a-icon type="close" />
+        <a-icon type="close" /> 
         <span>已驳回的借书记录</span>
       </a-menu-item>
     </a-menu>

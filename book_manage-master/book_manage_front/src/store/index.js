@@ -13,7 +13,7 @@ export default new Vuex.Store({
     bookshow: "all",//all,science,sword
     // 借书记录显示信息
     bookrecordshow: 'search',//search:所有记录,return:仅还书记录
-    //显示给管理员的借书记录
+    //显示给管理员的借书记录 
     mbookrecordshow:0,//0:未批准的借书记录 1:同意的借书记录 2:驳回的借书记录
   },
   mutations: {
