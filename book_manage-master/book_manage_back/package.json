@@ -1,0 +1,23 @@
+{
+  "name": "book_manage_web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "supervisor app"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "eds": "^1.0.2",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.15",
+    "pinyin": "^2.9.1",
+    "supervisor": "^0.12.0",
+    "uuid": "^8.3.2"
+  }
+}
