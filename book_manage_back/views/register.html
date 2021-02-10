@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>register</title>
+    <link rel="stylesheet" type="text/css" href="register-style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <section id='app'>
+        <div class="container">
+            <div class="user signinBx">
+                <div class="imgBx"><img src="image/library.jpg"></div>
+                <div class="formBx">
+                    <form>
+                        <h2>Sign In</h2>
+                        <input type="text" name="" placeholder="Username" autofocus v-model='acc_login'>
+                        <input type="password" name="" placeholder="Password" v-model='password_login'>
+                        <!-- <input type="submit" name="" value="Login"> -->
+                        <button type="button" @click='login_post'>login</button>
+                        <p class="register">Don't have an account?<a href="#" onclick="toggleForm();">Sign Up</a></p>
+                    </form>
+                </div>
+            </div>
+            <div class="user signupBx">
+                <div class="formBx">
+                    <form>
+                        <h2>create your account</h2>
+                        <input type="text" name="" placeholder="create your username" autofocus>
+                        <input type="password" name="" placeholder="set your password">
+                        <input type="phone" name="" placeholder="phone">
+                        <!-- <input type="submit" name="" value="sign up"> -->
+                        <button type="button" @click='register_post'>sign up</button>
+                        <p class="signup">Already have an account?<a href="#" onclick="toggleForm();">LogIn</a></p>
+                    </form>
+                </div>
+                <div class="imgBx"><img src="image/library.jpg"></div>
+            </div>
+        </div>
+    </section>
+    <script type="text/javascript">
+        function toggleForm() {
+            var container = document.querySelector('.container');
+            container.classList.toggle('active');
+        }
+        new Vue({
+            el: '#app',
+            data: {
+                acc_login: '',
+                password_login: '',
+                acc_register: '',
+                password_register: '',
+                phone_register: '',
+            },
+            methods: {
+                login_post: function () {
+                    //发送登录请求
+                    this.$http.post('localhost/admin/login',{'_id':acc_login,'password':password_login}).then((res) => {
+                        document.write(res.body)
+                    })
+                },
+                register_post: function () {
+                    //发送注册请求
+                    this.$http.post('localhost/admin/register',{}).then((res) => {
+                        document.write(res.body)
+                    })
+                },
+            }
+        })
+    </script>
+</body>
+
+</html>

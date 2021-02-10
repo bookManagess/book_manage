@@ -1,0 +1,8 @@
+.list_item:hover {
+    color: #ffffff;
+    background-color:rgb(202, 200, 202);
+    /* background-image: url(https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1898440656,3421570551&fm=26&gp=0.jpg); */
+}
+.list_item:active {
+    background-image: url(https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1963661110,1685480926&fm=26&gp=0.jpg);
+}
