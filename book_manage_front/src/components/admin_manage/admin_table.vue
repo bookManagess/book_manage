@@ -13,7 +13,7 @@
     />-->
     <a-input-search class="search_text" placeholder="请输入想要查看的内容" style="width: 200px"/>
   
-    <a-table :columns="columns" :data-source="data"  :pagination="ipagination" @change="pageChange" bordered >
+    <a-table :columns="columns" :data-source="data"  :pagination="ipagination" @change="pageChange" bordered  :rowKey="record=>record._id">
       <span slot="tags" slot-scope="tags">
         <a-tag
           v-for="tag in tags"
@@ -37,22 +37,29 @@
   </div>
 </template>
 <script>
+import { request } from "../../api/index";
+
 const columns = [
   {
-    title:'用户名',
-    dataIndex: 'name',
-    key: 'name',
+    title:'账号',
+    dataIndex: '_id',
+    key: '_id',
+    // scopedSlots: { customRender: '_id' },
   
   },
   {
     title: '密码',
     dataIndex: 'password',
-    key: 'password',
+     key: 'password',
+   // scopedSlots: { customRender: 'password' },
+    
   },
    {
     title: '电话号码',
-    dataIndex: 'phonenumber',
-    key: 'phonenumber',
+    dataIndex: 'phone',
+   key: 'phone',
+    //scopedSlots: { customRender: 'phone' },
+  
   },
   {
     title: '状态',
@@ -63,12 +70,12 @@ const columns = [
   {
     title: '操作',
     key: 'action',
-    scopedSlots: { customRender: 'action' },
+   scopedSlots: { customRender: 'action' },
   },
 ];
 
-const data = [
-  {
+const data = [];
+ /* {
     key: '1',
     name: '面包',
     password: '111',
@@ -92,12 +99,12 @@ const data = [
       phonenumber:'13356667777',
       tags:['√']
     })
-  }
+  }*/
 
 export default {
   data() {
     return {
-      data,
+      data:[],
       columns,
       ipagination: {
         current: 1,
@@ -110,6 +117,18 @@ export default {
         showTotal: (total, range) => `显示${range[0]}-${range[1]}条，共有 ${total}条`
         }
     };
+  },
+  created(){
+    request({
+      url:"/admin/search",
+      method:"get"
+    }).then((res)=>{
+      console.log(res);
+      this.data=res.data.message.filter((n)=>n.identify==0);
+      console.log(this.data);
+    }).catch((err)=>{
+      console.log(err);
+    });
   },
   methods:{
     pageChange(page, pageSize) {
