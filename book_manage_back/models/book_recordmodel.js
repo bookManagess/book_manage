@@ -4,27 +4,32 @@ var uuid = require('../node_modules/uuid/dist')
 //借书记录表
 var recordschema = mongoose.Schema({
     _id: {
-        type:String,
+        type: String,
         default: uuid.v1,
     },
-    book_name:{
-        type:String,
-        required:true
+    _v: {
+        // 记录状态,0：未审核，1:已同意,2:已驳回
+        type: String,
+        default: "0",
     },
-    bor_user:{
-        type:String,
-        required:true
+    book_name: {
+        type: String,
+        required: true
     },
-    bor_date:{
-        type:String,
-        require:true,
+    bor_user: {
+        type: String,
+        required: true
     },
-    re_date:{
-        type:String,
+    bor_date: {
+        type: String,
+        require: true,
+    },
+    re_date: {
+        type: String,
         default: '0',
     }
-},{_id:false})
+}, { _id: false, versionKey: false })
 
-var recordModel = mongoose.model('Book_record',recordschema,'book_records')
+var recordModel = mongoose.model('Book_record', recordschema, 'book_records')
 
 module.exports = recordModel;//暴露模块

@@ -35,10 +35,23 @@ exports.create_record = async (req, res) => {
     }
 }
 
+// 传入_id与修改内容（键值队形式）
+exports.updateRecord = async (req, res) => {
+    try {
+        const data = await Bookrecord.findByIdAndUpdate({ _id: req.params._id }, req.body)
+        res.status(200).json({
+            message: 'success',
+            data,
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(404).json({ message: err });
+    }
+}
+
 //还书,传入id,添加还书日期,书籍数量+1
 exports.return_record = async (req, res) => {
     try {
-        console.log(req.body)
         // 找出借书记录id对应的书名(因为书名串联了两个表)
         var bookrecord = await Bookrecord.findOne({ _id: req.body.name })
         //调整时间格式

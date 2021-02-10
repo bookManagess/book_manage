@@ -83,21 +83,21 @@ exports.insertBook = async (req, res) => {
     }
 }
 
-// 上下架图书,传入图书_id,status(上架：up，下架：down)
-exports.controllBook = async (req, res) => {
+// 上下架图书，修改图书信息等
+exports.updateBook = async (req,res) => {
     try {
-        await Book.update(
-            { _id: req.body._id },
-            { status: req.body.status }
-        )
+        const data = await Book.findByIdAndUpdate({_id:req.params._id},req.body)
         res.status(200).json({
-            message: 'success'
+            message: 'success',
+            data
         })
     } catch (err) {
-        res.status(409).json({
+        console.log(err);
+        res.status(404).json({
             err
         })
     }
+    
 }
 
 // 删除图书,(图书_id)

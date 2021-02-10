@@ -27,6 +27,7 @@ var bookschema = mongoose.Schema({
         required: [true, '必须要有数量']
     },
     status: {
+        // 无论上架还是下架管理员都能看见的，但是得显示状态
         type: String,
         enum: ['up', 'down'],
         default: 'up',//up表示上架，down表示下架

@@ -45,8 +45,8 @@ exports.admin_login = async (req, res) => {
                 res.status(200).json({
                     status: true,
                     message: "successs",
-                    tip :admin.identify,
-                    phone:admin.phone
+                    tip: admin.identify,
+                    phone: admin.phone
                 })
             }
         }
@@ -72,27 +72,52 @@ exports.change_password = async (req, res) => {
     }
 }
 
-//获取所有用户
-exports.getAlladmin = async (req, res) => {
-    user = await User.find();
-    res.status(200).json({
-        status: true,
-        message: user
-    })
-}
-
-//删除用户
-exports.admin_delete = async (req, res) => {
-    await User.deleteMany({ _id: req.body._id }, (err, data) => {
-        if (err) {
-            res.status(409).json({
-                status: true,
-                message: err
-            })
-        }
+// 修改用户状态
+exports.updateUser = async (req, res) => {
+    try {
+        const data = await User.findByIdAndUpdate({ _id: req.params._id }, req.body)
         res.status(200).json({
             status: true,
-            message: "删除成功"
+            message: "success",
+            data
         })
-    })
+    } catch (err) {
+        console.log(err);
+        res.status(404).json({
+            err
+        })
+    }
+}
+
+//获取所有用户
+exports.getAlladmin = async (req, res) => {
+    try {
+        user = await User.find();
+        res.status(200).json({
+            status: true,
+            message: user
+        })
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+//删除用户，传入_id
+exports.admin_delete = async (req, res) => {
+    try {
+        await User.deleteMany({ _id: req.body._id }, (err, data) => {
+            if (err) {
+                res.status(409).json({
+                    status: true,
+                    message: err
+                })
+            }
+            res.status(200).json({
+                status: true,
+                message: "删除成功"
+            })
+        })
+    } catch (err) {
+        console.log(err);
+    }
 }

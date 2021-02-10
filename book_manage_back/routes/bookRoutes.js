@@ -9,11 +9,11 @@ router.route("/showbook")
 
 router.route("/findbook")
   .post(bookcontroller.rough_find)
-
+// 传入_id(params)与修改内容(body)
+router.route("/update/:_id")
+  .patch(bookcontroller.updateBook)
 router.route("/insertbook")
   .post(bookcontroller.insertBook)
-router.route("/controllBook")
-  .post(bookcontroller.controllBook)
 router.route("/deleteBook")
   .post(bookcontroller.book_delete)
 

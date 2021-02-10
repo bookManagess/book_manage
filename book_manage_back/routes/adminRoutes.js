@@ -10,11 +10,13 @@ router.route("/register").post(admincontroller.admin_register)
 router.route("/change_password").post(admincontroller.change_password)
 router.route("/search").get(admincontroller.getAlladmin)
 router.route("/delete").post(admincontroller.admin_delete)
+// 修改用户信息传入_id(以params形式),待修改内容(body形式)
+router.route("/update/:_id").patch(admincontroller.updateUser)
 
 //测试
 router
-      .route("/test")
-      .post(test.number)
+  .route("/test")
+  .post(test.number)
 
 
 
@@ -71,7 +73,7 @@ router
 
 
 
-      
+
 
 router
   .route("test1")
