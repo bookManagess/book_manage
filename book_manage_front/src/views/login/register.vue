@@ -1,61 +1,74 @@
 <template>
   <section class="section">
-    <div class="container">
-      <div class="user signinBx">
-        <div class="imgBx">
-          <img src="../../assets/image/login_register/library.jpg" />
+    <spin :visible="spinVisible">
+      <div class="container">
+        <div class="user signinBx">
+          <div class="imgBx">
+            <img src="../../assets/image/login_register/library.jpg" />
+          </div>
+          <div class="formBx">
+            <form>
+              <h2>Sign In</h2>
+              <a-input
+                type="text"
+                name=""
+                placeholder="Username"
+                v-model="login_name"
+                auto-focus
+              />
+              <a-input-password
+                type="password"
+                placeholder="password"
+                v-model="login_password"
+              />
+              <a href="#" @click="login">login</a>
+              <h5 :tip_login="tip_login">{{ tip_login }}</h5>
+              <p class="register">
+                Don't have an account?<a href="#" @click="toggleForm"
+                  >Sign Up</a
+                >
+              </p>
+            </form>
+          </div>
         </div>
-        <div class="formBx">
-          <form>
-            <h2>Sign In</h2>
-            <a-input
-              type="text"
-              name=""
-              placeholder="Username"
-              v-model="login_name"
-              auto-focus
-            />
-            <a-input-password
-              type="password"
-              placeholder="password"
-              v-model="login_password"
-            />
-            <a href="#" @click="login">login</a>
-            <h5 :tip_login="tip_login">{{ tip_login }}</h5>
-            <p class="register">
-              Don't have an account?<a href="#" @click="toggleForm">Sign Up</a>
-            </p>
-          </form>
+        <div class="user signupBx">
+          <div class="formBx">
+            <form>
+              <h2>create your account</h2>
+              <a-input
+                type="text"
+                name=""
+                placeholder="create your username"
+                v-model="register_name"
+              />
+              <a-input-password
+                name=""
+                placeholder="set your password"
+                v-model="register_password"
+              />
+              <a-input
+                type="text"
+                name=""
+                placeholder="phone"
+                v-model="register_phone"
+              />
+              <a href="#" @click="register">sign up</a>
+              <h5 :tip_register="tip_register" style="color: red">
+                {{ tip_register }}
+              </h5>
+              <p class="signup">
+                Already have an account?<a href="#" @click="toggleForm"
+                  >LogIn</a
+                >
+              </p>
+            </form>
+          </div>
+          <div class="imgBx">
+            <img src="../../assets/image/login_register/library.jpg" />
+          </div>
         </div>
       </div>
-      <div class="user signupBx">
-        <div class="formBx">
-          <form>
-            <h2>create your account</h2>
-            <a-input
-              type="text"
-              name=""
-              placeholder="create your username"
-              v-model="register_name"
-            />
-            <a-input-password
-              name=""
-              placeholder="set your password"
-              v-model="register_password"
-            />
-            <a-input type="text" name="" placeholder="phone" v-model="register_phone" />
-            <a href="#" @click="register">sign up</a>
-            <h5 :tip_register="tip_register" style="color: red">{{ tip_register }}</h5>
-            <p class="signup">
-              Already have an account?<a href="#" @click="toggleForm">LogIn</a>
-            </p>
-          </form>
-        </div>
-        <div class="imgBx">
-          <img src="../../assets/image/login_register/library.jpg" />
-        </div>
-      </div>
-    </div>
+    </spin>
   </section>
 </template>
 
@@ -65,11 +78,16 @@
 
 <script>
 import { request } from "../../api/index";
+import spin from "@/components/spin/spin.vue";
 
 export default {
   name: "login",
+  components: {
+    spin,
+  },
   data() {
     return {
+      spinVisible: false,
       login_name: "",
       login_password: "",
       register_name: "",
@@ -85,6 +103,7 @@ export default {
       container.classList.toggle("active");
     },
     login() {
+      this.spinVisible = true;
       //发送请求
       request({
         url: "/admin/login",
@@ -97,14 +116,21 @@ export default {
         .then((res) => {
           if (res.data.status) {
             // 为什么还能返回
-            if(res.data.tip === "1") {
+            if (res.data.tip === "1") {
+              this.spinVisible = false;
               this.$router.replace("/manager_home");
             } else {
               this.$router.replace("/Home");
+              this.spinVisible = false;
             }
             //存储登录信息
-            this.$store.commit("store_login_message", [this.login_name, this.login_password, res.data.phone]);
+            this.$store.commit("store_login_message", [
+              this.login_name,
+              this.login_password,
+              res.data.phone,
+            ]);
           } else {
+            this.spinVisible = false;
             this.tip_login = res.data.message;
           }
         })
@@ -141,3 +167,10 @@ export default {
   },
 };
 </script>
+
+<style>
+.container {
+  position: relative;
+  z-index: -1;
+}
+</style>
