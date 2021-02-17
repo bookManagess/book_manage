@@ -171,6 +171,6 @@ export default {
 <style>
 .container {
   position: relative;
-  z-index: -1;
+  z-index: 0;
 }
 </style>
