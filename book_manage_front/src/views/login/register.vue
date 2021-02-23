@@ -139,6 +139,7 @@ export default {
         });
     },
     register() {
+      this.spinVisible = true;
       if (this.register_name && this.register_name && this.register_phone) {
         request({
           url: "admin/register",
@@ -150,6 +151,7 @@ export default {
           },
         })
           .then((res) => {
+            this.spinVisible = false;
             if (res.data.message == "success") {
               this.toggleForm();
               this.$message.info("success");
@@ -161,6 +163,7 @@ export default {
             console.log(err);
           });
       } else {
+        this.spinVisible = false;
         this.$message.info("输入信息不完整");
       }
     },

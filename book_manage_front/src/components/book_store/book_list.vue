@@ -17,7 +17,7 @@
     >
       <a-list :data-source="data" class="book_list">
         <a-list-item slot="renderItem" slot-scope="item" class="list_item">
-          <a-list-item-meta @click="borrow(item.name)">
+          <a-list-item-meta @click="borrow(item)">
             <div slot="title" class="list_font">
               <img :src="item.url" height="100px" width="150px" />
               {{ item.name }}
@@ -28,19 +28,43 @@
         <div v-if="loading && !busy" class="demo-loading-container">
           <a-spin />
         </div>
+        
       </a-list>
-    </div>
+      
+      <!--图书详情-->
+      <a-drawer
+        :title="title"
+        placement="right"
+        :closable="false"
+        :visible="visible"
+        :get-container="false"
+        @close="onClose"
+      >
+      <div style="margin-left: 20px;">
+        <ul style="list-style-type:circle ">
+          <li style="padding-top: 10px;">编号：{{this.borrow_book._id}}</li>
+          <li style="padding-top: 10px;">书名：{{this.borrow_book.name}}</li>
+          <li style="padding-top: 10px;">作者：{{this.borrow_book.author}}</li>
+          <li style="padding-top: 10px;">类型：{{this.borrow_book.type}}</li>
+          <li style="padding-top: 10px;">剩余数量：{{this.borrow_book.number}}</li>
+          <li style="padding-top: 10px;" v-if="this.borrow_book.status=='up'">状态：已上架</li>
+          <li style="padding-top: 10px;" v-else>状态：未上架</li>
+        </ul>
+      </div>
+      <div style="margin-top: 30px;">
+        <a-popconfirm
+          title="你确定要借这本书吗？"
+          ok-text="Yes"
+          cancel-text="No"
+          @confirm="borrow_handleOk"
+          @cancel="cancel"
+        >
+          <a-button type="primary">借书</a-button>
+        </a-popconfirm>
+      </div>
+      </a-drawer>
 
-    <!-- 借书对话框 -->
-    <a-modal
-      title="借书"
-      :visible="borrow_visible"
-      :confirm-loading="borrow_confirmLoading"
-      @ok="borrow_handleOk"
-      @cancel="borrow_handleCancel"
-    >
-      <p>{{ ModalText }}</p>
-    </a-modal>
+    </div>
   </div>
 </template>
 
@@ -62,7 +86,8 @@ export default {
   data() {
     return {
       // 借书对话框提示
-      bookname: "", //记录点击书的名字
+      borrow_book: "", //记录点击书的信息
+      title: "",
       ModalText: "你是否要借",
       borrow_visible: false,
       borrow_confirmLoading: false,
@@ -72,6 +97,7 @@ export default {
       // 滚动框提示
       loading: false,
       busy: false,
+      visible: false,
     };
   },
   created() {
@@ -84,6 +110,7 @@ export default {
     })
       .then((res) => {
         this.data = res.data.book;
+        console.log(this.data);
       })
       .catch((err) => {
         console.log(err);
@@ -125,21 +152,27 @@ export default {
     },
   },
   methods: {
-    borrow(name) {
+    borrow(book) {
       if (this.$store.state.login_name == "") {
         this.$message.info("请先登录");
       } else {
-        this.bookname = name;
-        this.ModalText = "你确定要借" + "《" + name + "》" + "吗？";
+        this.visible = true;
+        this.title = "详情 -- " + book.name;
+        this.borrow_book = book;
+        this.bookname= book.name;
+        this.ModalText = "你确定要借" + "《" + book.name + "》" + "吗？";
         this.borrow_visible = true;
       }
+    },
+    onClose() {
+      this.visible = false;
     },
     borrow_handleOk() {
       request({
         url: "/book/showbook",
         method: "post",
         data: {
-          name: this.bookname,
+          name: this.borrow_book.name,
         },
       })
         .then((bor_res) => {
@@ -148,7 +181,7 @@ export default {
             url: "/bookrecord/showbookrecord",
             method: "post",
             data: {
-              book_name: this.bookname,
+              book_name: this.borrow_book.name,
               bor_user: this.$store.state.login_name,
             },
           })
