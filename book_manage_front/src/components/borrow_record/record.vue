@@ -13,17 +13,27 @@
         class="record_table"
         :columns="columns"
         :data-source="data"
-        rowKey="_id"
+        :rowKey="record=>record._id"
         :pagination="ipagination"
         @change="pageChange"
         bordered
         :scroll="{ y: 240 }"
       >
-        <span slot="action">
-          <a-button type="primary"> 同意 </a-button>
+        <template slot="action" slot-scope="text,record">
+          <span v-if="statechange==0">
+          <a-button type="primary" @click="agree(text,record)"> 同意 </a-button>
           <a-divider type="vertical" />
-          <a-button type="danger"> 驳回 </a-button>
-        </span>
+          <a-button type="danger" @click="dismiss(text,record)"> 驳回 </a-button>
+          </span>
+
+          <span v-else-if="statechange==1">
+            <a-tag color="geekblue">已同意</a-tag>
+          </span>
+
+          <span v-else>
+            <a-tag color="red">已驳回</a-tag>
+          </span>
+        </template>
       </a-table>
     </div>
   </div>
@@ -81,8 +91,6 @@ export default {
     };
   },
   async created() {
-    // emmm留，以后这种形式写，降低耦合，提高内聚，谁也不知道，你下次又要在哪调这个函数
-    // 当然，这个写在action里才是最好的，那样全局都可以用。但那样要改很多，我懒emmm
     this.getRecord();
   },
   watch: {
@@ -92,8 +100,7 @@ export default {
         method: "get",
       })
         .then((res) => {
-          console.log(val);
-          this.data = res.data.bookrecord.filter((n) => n.__v === val);
+          this.data = res.data.bookrecord.filter((n) => n._v == val);
         })
         .catch((err) => {
           console.log(err);
@@ -112,7 +119,37 @@ export default {
       this.ipagination.current = page.current;
       this.ipagination.pageSize = page.pageSize;
     },
-  },
+    agree(text,record){
+      request({
+        url: "/bookrecord/updateRecord/"+text._id,
+        method: "patch",
+        data:{
+          _v:"1"
+        }
+      })
+        .then((res) => {
+          console.log("同意成功")
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    dismiss(text,record){
+      request({
+        url: "/bookrecord/updateRecord/"+text._id,
+        method: "patch",
+        data:{
+          _v:"2"
+        }
+      })
+        .then((res) => {
+          console.log("驳回成功")
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  }
 };
 </script>
 
