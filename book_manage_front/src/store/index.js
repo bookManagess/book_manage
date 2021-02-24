@@ -6,6 +6,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     //登录信息
+    newbookdata:"",
+    booklength:"",
+    booksearch:"",
     login_name: "",
     login_password: "",
     login_phone: "",
@@ -26,6 +29,15 @@ export default new Vuex.Store({
     // 图书显示状态
     change_bookshow(state,bookshow) {
       state.bookshow = bookshow
+    },
+    newbookdata(state,newbookdata) {
+      state.newbookdata = newbookdata
+    },
+    booksearch(state,booksearch) {
+      state.booksearch = booksearch
+    },
+    booklength(state,booklength) {
+      state.booklength = booklength
     },
     change_bookrecordshow(state,bookrecordshow) {
       state.bookrecordshow = bookrecordshow

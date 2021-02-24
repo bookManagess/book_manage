@@ -1,14 +1,8 @@
 <template>
-  <div id="bookSearch">
-    <span>
-      <a-button id="new" @click="handleAdd">上架图书</a-button>
-      <a-modal v-model="visible" title="上架图书" ok-text="确认" cancel-text="取消" @ok="hideModal">
+  <div >
         <bookNew></bookNew>
-        </a-modal>
-       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    </span>
     <div  id="Search">
-    <a-input-search placeholder="请输入书籍信息" style="width: 200px"  v-model="value"/>
+    <a-input-search placeholder="请输入书籍信息" style="width: 200px"  v-model="booksearch"/>
     </div>
   </div>
 </template>
@@ -16,6 +10,16 @@
 <script>
 import bookNew from "./bookNew"
 export default {
+  computed: {
+   booksearch: {
+    get () {
+      return this.$store.state.booksearch
+    },
+    set (val) {
+      this.$store.commit('booksearch', val)
+    }
+  }
+  },
   components:{bookNew},
   data(){
     return{
@@ -32,8 +36,6 @@ export default {
     },
     confirm() {
       this.$confirm({
-        title: 'Confirm',
-        content: 'Bla bla ...',
         okText: '确认',
         cancelText: '取消',
       });
